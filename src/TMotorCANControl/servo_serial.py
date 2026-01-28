@@ -644,10 +644,10 @@ class TMotorManager_servo_serial():
 
     def check_connection(self):
         """
-        Sends parameter read commands and polls for a response for up to 0.5 seconds.
+        Sends parameter read commands and polls for a response for up to 1.0 seconds.
         Returns True as soon as a response is received.
         """
-        for _ in range(10):
+        for _ in range(20):
             self._send_specific_command(self.comm_get_motor_parameters())
             time.sleep(0.05)
             if self._updated_async:
