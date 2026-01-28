@@ -68,6 +68,22 @@ Servo_Params = {
             'NUM_POLE_PAIRS': 21,
             'Use_derived_torque_constants': False, # true if you have a better model
         },
+        'AK40-10':{
+            'P_min' : -32000,#-3200 deg
+            'P_max' : 32000,#3200 deg
+            'V_min' : -100000,#-100000 rpm electrical speed
+            'V_max' : 100000,# 100000 rpm electrical speed
+            'Curr_min':-7300,#-7.3A peak current
+            'Curr_max':7300,#7.3A peak current
+            'T_min' : -4.1,#NM
+            'T_max' : 4.1,#NM
+            'Kt_TMotor' : 0.056, # from TMotor website (actually 1/Kvll)
+            'Current_Factor' : 0.59, # UNTESTED CONSTANT!
+            'Kt_actual': 0.071, # UNTESTED CONSTANT!
+            'GEAR_RATIO': 10.0, 
+            'NUM_POLE_PAIRS': 14,
+            'Use_derived_torque_constants': False, # true if you have a better model
+        },
         'CAN_PACKET_ID':{
 
             'CAN_PACKET_SET_DUTY':0, #Motor runs in duty cycle mode

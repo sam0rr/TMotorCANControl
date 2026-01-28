@@ -23,7 +23,20 @@ Servo_Params_Serial = {
         'Kt': 0.115, # Nm before gearbox per A of qaxis current
         'GEAR_RATIO': 9, # 9:1 gear ratio
         'NUM_POLE_PAIRS' : 21 # 21 pole pairs
-    }        
+    },
+    'AK40-10': {
+        'Type' : 'AK40-10', # name of motor to print out in diagnostics
+        'P_min' : -58.85, # rad (-58.85 rad limit)
+        'P_max' : 58.85, # rad (58.85 rad limit)
+        'V_min' : -45.0, # rad/s
+        'V_max' : 45.0, # rad/s
+        'Curr_min' : -7.3,# A
+        'Curr_max' : 7.3, # A
+        'Temp_max' : 50.0, # max mosfet temp in deg C
+        'Kt': 0.071, # Nm before gearbox per A of qaxis current
+        'GEAR_RATIO': 10, # 10:1 gear ratio
+        'NUM_POLE_PAIRS' : 14 # 14 pole pairs
+    }
 }
 """
 Dictionary with the default parameters for the motors, indexed by their name

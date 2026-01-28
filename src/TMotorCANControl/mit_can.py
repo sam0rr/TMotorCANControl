@@ -129,6 +129,23 @@ MIT_Params = {
             'Kt_actual': 0.153, # UNTESTED CONSTANT!
             'GEAR_RATIO': 80.0,
             'Use_derived_torque_constants': False, # true if you have a better model
+        },
+        'AK40-10':{
+            'P_min' : -12.5,
+            'P_max' : 12.5,
+            'V_min' : -50.0,
+            'V_max' : 50.0,
+            'T_min' : -4.1,
+            'T_max' : 4.1,
+            'Kp_min': 0.0,
+            'Kp_max': 500.0,
+            'Kd_min': 0.0,
+            'Kd_max': 5.0,
+            'Kt_TMotor' : 0.056, # from TMotor website (actually 1/Kvll)
+            'Current_Factor' : 0.59, # UNTESTED CONSTANT!
+            'Kt_actual': 0.071, # UNTESTED CONSTANT!
+            'GEAR_RATIO': 10.0,
+            'Use_derived_torque_constants': False, # true if you have a better model
         }
 }
 """
