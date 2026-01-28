@@ -644,14 +644,14 @@ class TMotorManager_servo_serial():
 
     def check_connection(self):
         """
-        For now, just sends some parameter read commands and waits 0.2 seconds to
-        see if we got a response.
+        Sends parameter read commands and polls for a response for up to 0.5 seconds.
+        Returns True as soon as a response is received.
         """
-        self._send_specific_command(self.comm_get_motor_parameters())
-        self._send_specific_command(self.comm_get_motor_parameters())
-        self._send_specific_command(self.comm_get_motor_parameters())
-        # slight delay to ensure connection!
-        time.sleep(0.2)
+        for _ in range(10):
+            self._send_specific_command(self.comm_get_motor_parameters())
+            time.sleep(0.05)
+            if self._updated_async:
+                return True
         return self._updated_async
 
     def update_async(self, data):
