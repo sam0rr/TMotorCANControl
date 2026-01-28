@@ -594,7 +594,6 @@ class TMotorManager_servo_serial():
             self._reader_thread = serial.threaded.ReaderThread(self._ser, motor_listener)
             self._listener = self._reader_thread.__enter__() 
             self._listener.motor = self
-            time.sleep(0.1) # allow thread to stabilize
 
             # send startup sequence
             self.power_on()
@@ -645,15 +644,14 @@ class TMotorManager_servo_serial():
 
     def check_connection(self):
         """
-        Sends parameter read commands and polls for a response for up to 1.5 seconds.
-        Returns True as soon as a response is received.
+        For now, just sends some parameter read commands and waits 0.2 seconds to
+        see if we got a response.
         """
-        self._updated_async = False
-        for _ in range(30):
-            self._send_specific_command(self.comm_get_motor_parameters())
-            time.sleep(0.05)
-            if self._updated_async:
-                return True
+        self._send_specific_command(self.comm_get_motor_parameters())
+        self._send_specific_command(self.comm_get_motor_parameters())
+        self._send_specific_command(self.comm_get_motor_parameters())
+        # slight delay to ensure connection!
+        time.sleep(0.2)
         return self._updated_async
 
     def update_async(self, data):
