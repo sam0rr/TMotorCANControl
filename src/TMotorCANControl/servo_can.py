@@ -427,7 +427,7 @@ class CAN_Manager_servo(object):
         """
         buffer=[]
         self.buffer_append_int32(buffer, np.int32(duty * 100000.0))
-        self.send_servo_message(controller_id|(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_DUTY'] << 8), buffer, send_index)
+        self.send_servo_message(controller_id|(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_DUTY'] << 8), buffer, 0)
 
     # Send Servo control message for current loop mode
     #*Current loop mode: given the Iq current specified by the motor, the motor output torque = Iq *KT, so it can be used as a torque loop
@@ -441,7 +441,7 @@ class CAN_Manager_servo(object):
         """
         buffer=[]
         self.buffer_append_int32(buffer, np.int32(current * 1000.0))
-        self.send_servo_message(controller_id|(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_CURRENT'] << 8), buffer, send_index)
+        self.send_servo_message(controller_id|(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_CURRENT'] << 8), buffer, 0)
 
     # Send Servo control message for current brake mode
     #*Current brake mode: the motor is fixed at the current position by the specified brake current given by the motor (pay attention to the motor temperature when using)
@@ -455,7 +455,7 @@ class CAN_Manager_servo(object):
         """
         buffer=[]
         self.buffer_append_int32(buffer, np.int32(current * 1000.0))
-        self.send_servo_message(controller_id|(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_CURRENT_BRAKE'] << 8), buffer, send_index)
+        self.send_servo_message(controller_id|(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_CURRENT_BRAKE'] << 8), buffer, 0)
         
     # Send Servo control message for Velocity mode
     #*Velocity mode: the speed specified by the given motor
@@ -469,7 +469,7 @@ class CAN_Manager_servo(object):
         """
         buffer=[]
         self.buffer_append_int32(buffer, np.int32(rpm))
-        self.send_servo_message(controller_id| (Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_RPM'] << 8), buffer, send_index)
+        self.send_servo_message(controller_id| (Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_RPM'] << 8), buffer, 0)
     
     # Send Servo control message for Position Loop mode
     #*Position mode: Given the specified position of the motor, the motor will run to the specified position, (default speed 12000erpm acceleration 40000erpm)
@@ -481,10 +481,9 @@ class CAN_Manager_servo(object):
             controller_id: CAN ID of the motor to send the message to
             pos: desired position in degrees
         """
-        send_index = 0
         buffer=[]
-        self.buffer_append_int32(buffer, np.int32(pos * 1000000.0), send_index)
-        self.send_servo_message(controller_id|(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_POS'] << 8), buffer, send_index)
+        self.buffer_append_int32(buffer, np.int32(pos * 1000000.0))
+        self.send_servo_message(controller_id|(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_POS'] << 8), buffer, 0)
     
     #Set origin mode
     #*0 means setting the temporary origin (power failure elimination), 1 means setting the permanent zero point (automatic parameter saving), 2means restoring the default zero point (automatic parameter saving)
@@ -496,9 +495,8 @@ class CAN_Manager_servo(object):
             controller_id: CAN ID of the motor to send the message to
             set_origin_mode: 0 means setting the temporary origin (power failure elimination), 1 means setting the permanent zero point (automatic parameter saving), 2means restoring the default zero point (automatic parameter saving)
         """
-        send_index=0
         buffer=[set_origin_mode]
-        self.send_servo_message(controller_id |(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_ORIGIN_HERE'] << 8), buffer, send_index)
+        self.send_servo_message(controller_id |(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_ORIGIN_HERE'] << 8), buffer, 0)
 
     #Position and Velocity Loop Mode
     #* Check documentation
@@ -513,13 +511,11 @@ class CAN_Manager_servo(object):
             spd: desired max speed in ERPM
             RPA: desired acceleration
         """
-        send_index = 0
-        send_index1 = 0
         buffer=[]
-        self.buffer_append_int32(buffer, (pos * 10000.0), send_index)
-        self.buffer_append_int16(buffer,spd, send_index1)
-        self.buffer_append_int16(buffer,RPA, send_index1)
-        self.send_servo_message(controller_id |(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_POS_SPD'] << 8), buffer, send_index)
+        self.buffer_append_int32(buffer, np.int32(pos * 10000.0))
+        self.buffer_append_int16(buffer, np.int16(spd))
+        self.buffer_append_int16(buffer, np.int16(RPA))
+        self.send_servo_message(controller_id |(Servo_Params['CAN_PACKET_ID']['CAN_PACKET_SET_POS_SPD'] << 8), buffer, 0)
 
     #* **************************END************************************************#
  
