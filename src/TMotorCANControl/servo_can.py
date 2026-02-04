@@ -873,7 +873,7 @@ class TMotorManager_servo_can():
         self._control_state = _TMotorManState_Servo.IDLE
 
     # used for either impedance or MIT mode to set output angle
-    def set_output_angle_radians(self, pos, vel, acc):
+    def set_output_angle_radians(self, pos, vel=0.0, acc=0.0):
         """
         Update the current command to the desired position, when in position or position-velocity mode.
         Note, this does not send a command, it updates the TMotorManager's saved command,
@@ -974,7 +974,7 @@ class TMotorManager_servo_can():
         Args:
             pos: The desired motor-side position in rad.
         """
-        self.set_output_angle_radians(pos/(Servo_Params[self.type]["GEAR_RATIO"]) )
+        self.set_output_angle_radians(pos/(Servo_Params[self.type]["GEAR_RATIO"]), 0.0, 0.0)
 
     def set_motor_velocity_radians_per_second(self, vel):
         """
