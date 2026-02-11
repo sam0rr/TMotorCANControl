@@ -1,5 +1,5 @@
 from operator import mod
-from NeuroLocoMiddleware.AdcManager import ADC_Manager;
+from NeuroLocoMiddleware.AdcManager import ADC_Manager
 from NeuroLocoMiddleware.SoftRealtimeLoop import SoftRealtimeLoop
 import time
 import numpy as np
@@ -18,17 +18,15 @@ time_list = []
 filt_size = 50
 
 
-
 print("Calibrating Loadcell!!!")
 
 for i in range(500):
     adc.update()
-    
 
 
-loop = SoftRealtimeLoop(dt = 0.002, report=False, fade=0)   
+loop = SoftRealtimeLoop(dt=0.002, report=False, fade=0)
 
-torque_init = (adc.volts-2.5)/2.5*torque_rating
+torque_init = (adc.volts - 2.5) / 2.5 * torque_rating
 
 i = 0
 for t in loop:
@@ -36,19 +34,19 @@ for t in loop:
     voltage_raw.append(adc.volts)
     if i >= filt_size:
         # print(voltage_raw[i-filt_size:i])
-        voltage = np.median(voltage_raw[i-filt_size:i])
+        voltage = np.median(voltage_raw[i - filt_size : i])
 
-        torque = (voltage-2.5)/2.5*torque_rating-torque_init
+        torque = (voltage - 2.5) / 2.5 * torque_rating - torque_init
 
-        voltage_array.append(voltage) 
+        voltage_array.append(voltage)
         torque_array.append(torque)
         time_list.append(t)
-        
+
         if i % 100 == 0:
             print(f"Loadcell- Voltage: {voltage} Torque: {torque}")
-    
+
     i += 1
-    
+
     if i > len:
         break
 del loop
